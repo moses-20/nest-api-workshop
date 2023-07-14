@@ -9,3 +9,21 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Account {
+  id      Int    @id @default(autoincrement())
+  sim     String @unique
+  name    String
+  airtime String
+
+  @@map("account")
+}
+
+model Airtime {
+  id     Int    @id @default(autoincrement())
+  serial Int
+  code   String
+  value  String
+
+  @@map("airtime")
+}

@@ -11,19 +11,24 @@ datasource db {
 }
 
 model Account {
-  id      Int    @id @default(autoincrement())
-  sim     String @unique
-  name    String
-  airtime String
+  id            Int      @id @default(autoincrement())
+  sim           String   @unique
+  name          String
+  airtime       String
+  beneficiaryId Int?     @unique
+  beneficiary   Account? @relation("AccountBeneficiary", fields: [beneficiaryId], references: [id])
+  benefactor    Account? @relation("AccountBeneficiary")
 
   @@map("account")
 }
 
 model Airtime {
-  id     Int    @id @default(autoincrement())
+  id     Int     @id @default(autoincrement())
   serial Int
   code   String
   value  String
+  valid  Boolean @default(true)
 
+  @@unique([code, serial])
   @@map("airtime")
 }

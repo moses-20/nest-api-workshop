@@ -15,16 +15,22 @@ import { AccountBalanceGuard, AccountParamGuard } from './account.guard';
 import { AddBeneficiaryDto } from './dto/add-beneficiary.dto';
 import { NoBeneficiaryExceptionFilter } from './filters/exception.filter';
 import { RechargeAccountDto } from './dto/recharge-account.dto';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { GetAccountQuery } from './queries/get-account.query';
 
 @Controller('account')
 @UseFilters(NoBeneficiaryExceptionFilter)
 export class AccountController {
-  constructor(private accountService: AccountService) {}
+  constructor(
+    private accountService: AccountService,
+    private commandBus: CommandBus,
+    private queryBus: QueryBus,
+  ) {}
 
   @Get()
   @UseGuards(AccountBalanceGuard)
   async accountBalance(@Query('sim') sim: string): Promise<Account> {
-    return await this.accountService.getAccountBalance(sim);
+    return await this.queryBus.execute(new GetAccountQuery(sim));
   }
 
   @Post()

@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { AccountService } from './account.service';
 import { Account } from '@prisma/client';
 import { CreateAccountDto } from './dto/create-account.dto';
-import { AccountBalanceGuard } from '../guards/account.guard';
+import { AccountBalanceGuard } from './account.guard';
 
 @Controller('account')
 export class AccountController {
@@ -10,7 +10,7 @@ export class AccountController {
 
   @Get()
   @UseGuards(AccountBalanceGuard)
-  async accountBalance(@Query('sim') sim: string): Promise<Account | string> {
+  async accountBalance(@Query('sim') sim: string): Promise<Account> {
     return await this.accountService.getAccountBalance(sim);
   }
 

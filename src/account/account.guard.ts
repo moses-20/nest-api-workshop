@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   CanActivate,
   ExecutionContext,
   Injectable,
@@ -15,11 +16,10 @@ export class AccountBalanceGuard implements CanActivate {
 
     const simQuery = request.query.sim as string;
 
-    this.logger.log('SIM QUERY IS: ', simQuery);
+    this.logger.log(`SIM QUERY IS: ${simQuery}`);
 
-    if (simQuery == null) {
-      //   throw new Error('SIM is not in query');
-      return false;
+    if (simQuery == null || simQuery == '') {
+      throw new BadRequestException("'sim' query is missing");
     }
 
     return true;

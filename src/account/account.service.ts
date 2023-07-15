@@ -7,6 +7,7 @@ import { faker } from '@faker-js/faker';
 @Injectable()
 export class AccountService {
   private logger = new Logger('AccountService');
+
   constructor(private prismaService: PrismaService) {}
 
   async getAccountBalance(sim: string): Promise<Account> {
@@ -17,7 +18,6 @@ export class AccountService {
     });
 
     this.logger.log(result);
-
     return result;
   }
 

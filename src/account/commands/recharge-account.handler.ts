@@ -66,7 +66,7 @@ export class RechargeAccountCommandHandler
 
       let beneficiaryResult: string;
 
-      if (account.props.beneficiary != null) {
+      if (account.props.beneficiary != null && +airtimeDB.value > 100) {
         const beneficiary = new AccountModel({
           id: accountDB.beneficiary.id,
           airtime: accountDB.beneficiary.airtime,
@@ -96,7 +96,7 @@ export class RechargeAccountCommandHandler
           data: {
             airtime: accountResult,
             beneficiary:
-              account.props.beneficiary == null
+              beneficiaryResult == undefined
                 ? undefined
                 : {
                     update: {

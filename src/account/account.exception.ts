@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
 export abstract class RechargeAirtimeException extends HttpException {
-  public description: string;
+  public readonly description: string;
 }
 
 export class InvalidAirtimeException extends RechargeAirtimeException {

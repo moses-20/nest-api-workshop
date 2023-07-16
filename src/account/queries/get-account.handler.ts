@@ -17,7 +17,7 @@ export class GetAccountQueryHandler implements IQueryHandler<GetAccountQuery> {
     return {
       id: result.id,
       name: result.name,
-      sim: result.name,
+      sim: result.sim,
       airtime: result.airtime,
     };
   }

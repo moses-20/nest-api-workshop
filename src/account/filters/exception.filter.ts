@@ -1,12 +1,12 @@
 import { ArgumentsHost, Catch, ExceptionFilter, Logger } from '@nestjs/common';
-import { NoBeneficiaryException } from '../account.exception';
+import { RechargeAirtimeException } from '../account.exception';
 import { Response } from 'express';
 
-@Catch(NoBeneficiaryException)
-export class NoBeneficiaryExceptionFilter implements ExceptionFilter {
-  private logger = new Logger('NoBeneficiaryExceptionFilter');
+@Catch(RechargeAirtimeException)
+export class RechargeAirtimeExceptionFilter implements ExceptionFilter {
+  private logger = new Logger('RechargeAirtimeExceptionFilter');
 
-  catch(exception: NoBeneficiaryException, host: ArgumentsHost) {
+  catch(exception: RechargeAirtimeException, host: ArgumentsHost) {
     const response: Response = host.switchToHttp().getResponse();
 
     this.logger.log(exception.description);

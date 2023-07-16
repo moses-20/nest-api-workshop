@@ -1,17 +1,28 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-export class NoBeneficiaryException extends HttpException {
-  constructor(subscriber: string) {
-    super(
-      `No beneficiary found for subscriber ${subscriber}`,
-      HttpStatus.NON_AUTHORITATIVE_INFORMATION,
-      {
-        cause: new Error('Unidentified beneficiary'),
-        description: `Subscriber ${subscriber} does not have a beneficiary or the beneficiary ID does not exist`,
-      },
-    );
+export abstract class RechargeAirtimeException extends HttpException {
+  public description: string;
+}
 
-    this.description = `Subscriber ${subscriber} does not have a beneficiary or the beneficiary ID does not exist`;
+export class InvalidAirtimeException extends RechargeAirtimeException {
+  constructor(code: string) {
+    super(`Airtime with code ${code} is not valid`, HttpStatus.BAD_REQUEST, {
+      cause: new Error('Invalid Airtime Code'),
+    });
+
+    this.description = `The airtime code ${code} is neither valid nor usable`;
+  }
+
+  description: string;
+}
+
+export class AccountNotFoundException extends RechargeAirtimeException {
+  constructor(sim: string) {
+    super(`Subscriber ${sim} does not exist`, HttpStatus.BAD_REQUEST, {
+      cause: new Error('Invalid Airtime Code'),
+    });
+
+    this.description = `Subscriber ${sim} does not exist or has been deactivated`;
   }
 
   description: string;

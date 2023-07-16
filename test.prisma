@@ -1,0 +1,11 @@
+model Account {
+    id            Int       @id @default(autoincrement())
+    sim           String    @unique
+    name          String
+    airtime       String
+    benefactorId  Int?
+    benefactor    Account?  @relation("AccountBeneficiary", fields: [benefactorId], references: [id], onDelete: SetDefault)
+    beneficiaries Account[] @relation("AccountBeneficiary")
+
+    @@map("account")
+}
